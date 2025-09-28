@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warhammer Wounds Expected Value</title>
+
+    <style>
+
+        *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+  body {
+    font-family: system-ui, sans-serif;
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1rem;
+    line-height: 1.5;
+  }
+
+  fieldset {
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  label {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  input[type="number"],
+  input[type="button"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    font-size: 1rem;
+  }
+
+  input[type="button"] {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  input[type="button"]:hover {
+    background: #4338ca;
+  }
+
+  #result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f3f4f6;
+    border-radius: 8px;
+  }
+
+  #result h2 {
+    margin-top: 0;
+  }
+</style>
+</head>
+
+<body>
+    <form action="">
+        <fieldset>
+            <legend>To Wound Expected Value</legend>
+            <label for="tohit">To Hit</label>
+            <input type="number" name="tohit" id="tohit" min="2" max="6" required placeholder="e.g 3" step="1">
+            <label for="towound">To Wound</label>
+            <input type="number" name="towound" id="towound" min="2" max="6" required placeholder="e.g. 3" step="1">
+            <label for="tosave">To Save</label>
+            <input type="number" name="tosave" id="tosave" min="2" max="6" required placeholder="e.g. 3" step="1">
+            <label for="attacks">Number of Attacks</label>
+            <input type="number" name="attacks" id="attacks" min="1" step="1" required placeholder="1">
+            <input type="button" value="Calculate">
+
+            <div id="result" class="result" aria-live="polite" hidden>
+                <h2>Results</h2>
+                <ul>
+                    <li><strong>Expected wounds per attack:</strong> <span id="perAttack"></span></li>
+                    <li><strong>Total expected wounds:</strong> <span id="total"></span></li>
+                </ul>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+<script>
+    document.querySelector('input[value="Calculate"]').addEventListener('click', () => {
+        // grab input values and calculate the chance to hit
+        const toHit = parseInt(document.getElementById('tohit').value, 10);
+        const toWound = parseInt(document.getElementById('towound').value, 10);
+        const toSave = parseInt(document.getElementById('tosave').value, 10);
+        const attacks = parseInt(document.getElementById('attacks').value, 10);
+
+        // validate inputs
+        if ([toHit, toWound, toSave].some(v => isNaN(v) || v < 2 || v > 6)) {
+            alert('⚠️ Please enter numbers between 2 and 6 for rolls and at least 1 for attack count.');
+            return;
+        }
+
+        // calculate probabilities
+        const pHit = (7 - toHit) / 6;
+        const pWound = (7 - toWound) / 6;
+        const pSaveFail = (toSave - 1) / 6;
+
+        const expectedPerAttack = pHit * pWound * pSaveFail;
+
+        const totalExpected = expectedPerAttack * attacks;
+
+        // Display result (rounded to 3 decimal places)
+        document.getElementById('perAttack').textContent = expectedPerAttack.toFixed(3);
+        document.getElementById('total').textContent = totalExpected.toFixed(3);
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.hidden = false;
+
+    });
+</script>
+
+</html>
