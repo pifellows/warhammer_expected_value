@@ -7,63 +7,62 @@
     <title>Warhammer Wounds Expected Value</title>
 
     <style>
-
         *,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
 
-  body {
-    font-family: system-ui, sans-serif;
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 1rem;
-    line-height: 1.5;
-  }
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 1rem;
+            line-height: 1.5;
+        }
 
-  fieldset {
-    border-radius: 8px;
-    padding: 1rem;
-  }
+        fieldset {
+            border-radius: 8px;
+            padding: 1rem;
+        }
 
-  label {
-    display: block;
-    margin-top: 0.5rem;
-  }
+        label {
+            display: block;
+            margin-top: 0.5rem;
+        }
 
-  input[type="number"],
-  input[type="submit"] {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.25rem;
-    font-size: 1rem;
-  }
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+            font-size: 1rem;
+        }
 
-  input[type="submit"] {
-    background: #4f46e5;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 1rem;
-  }
+        input[type="submit"] {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
 
-  input[type="submit"]:hover {
-    background: #4338ca;
-  }
+        input[type="submit"]:hover {
+            background: #4338ca;
+        }
 
-  #result {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: #f3f4f6;
-    border-radius: 8px;
-  }
+        #result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
 
-  #result h2 {
-    margin-top: 0;
-  }
-</style>
+        #result h2 {
+            margin-top: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -71,7 +70,8 @@
         <fieldset>
             <legend>To Wound Expected Value</legend>
             <label for="tohit">To Hit</label>
-            <input type="number" name="tohit" id="tohit" min="2" max="6" required placeholder="e.g 3" step="1" autofocus>
+            <input type="number" name="tohit" id="tohit" min="2" max="6" required placeholder="e.g 3" step="1"
+                autofocus>
             <label for="towound">To Wound</label>
             <input type="number" name="towound" id="towound" min="2" max="6" required placeholder="e.g. 3" step="1">
             <label for="tosave">To Save</label>
