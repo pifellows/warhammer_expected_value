@@ -76,6 +76,8 @@
             <input type="number" name="towound" id="towound" min="2" max="6" required placeholder="e.g. 3" step="1">
             <label for="tosave">To Save</label>
             <input type="number" name="tosave" id="tosave" min="2" max="6" required placeholder="e.g. 3" step="1">
+            <label for="attacks">Feel No Pain (Optional) </label>
+            <input type="number" name="feelnopain" id="feelnopain" min="2" max="6" step="1" placeholder="e.g. 3">
             <label for="attacks">Number of Attacks</label>
             <input type="number" name="attacks" id="attacks" min="1" step="1" required placeholder="1">
             <input type="submit" value="Calculate">
@@ -85,6 +87,11 @@
                 <ul>
                     <li><strong>Expected wounds per attack:</strong> <span id="perAttack"></span></li>
                     <li><strong>Total expected wounds:</strong> <span id="total"></span></li>
+                </ul>
+                <h2>Results (Feel No Pain)</h2>
+                <ul>
+                    <li><strong>Expected wounds per attack:</strong> <span id="perAttackFeelNoPain"></span></li>
+                    <li><strong>Total expected wounds:</strong> <span id="totalFeelNoPain"></span></li>
                 </ul>
             </div>
         </fieldset>
@@ -100,6 +107,7 @@
         const toHit = parseInt(document.getElementById('tohit').value, 10);
         const toWound = parseInt(document.getElementById('towound').value, 10);
         const toSave = parseInt(document.getElementById('tosave').value, 10);
+        const feelNoPain = parseInt(document.getElementById('feelnopain').value, 10);
         const attacks = parseInt(document.getElementById('attacks').value, 10);
 
         // validate inputs
@@ -112,14 +120,20 @@
         const pHit = (7 - toHit) / 6;
         const pWound = (7 - toWound) / 6;
         const pSaveFail = (toSave - 1) / 6;
+        const pFeelNoPainFail = feelNoPain ? (feelNoPain - 1) / 6 : 1;
 
         const expectedPerAttack = pHit * pWound * pSaveFail;
-
         const totalExpected = expectedPerAttack * attacks;
+
+        const expectedPerAttackFeelNoPain = expectedPerAttack * pFeelNoPainFail;
+        const totalExpectedFeelNoPain = totalExpected * pFeelNoPainFail;
 
         // Display result (rounded to 3 decimal places)
         document.getElementById('perAttack').textContent = expectedPerAttack.toFixed(3);
         document.getElementById('total').textContent = totalExpected.toFixed(3);
+
+        document.getElementById('perAttackFeelNoPain').textContent = expectedPerAttackFeelNoPain.toFixed(3);
+        document.getElementById('totalFeelNoPain').textContent = totalExpectedFeelNoPain.toFixed(3);
 
         const resultDiv = document.getElementById('result');
         resultDiv.hidden = false;
